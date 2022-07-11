@@ -7,23 +7,12 @@ import { fetchEntries } from '../../contentful/client'
 const Product = ({ product }) => {
   const router = useRouter()
   const { id } = router.query
-
-  const image = product.image.fields.file
-  const width = 300;
-
-
-  const calculateHeight = (details, width) => {
-    const aspectRatio = details.image.width / details.image.height;
-    return width / aspectRatio;
-  }
-  const ACCESS_KEY = process.env.NEXT_PUBLIC_ACCESS_KEY
-  const url = `//api.unsplash.com/search/photos?client_id=${ACCESS_KEY}&page=1&query=${product.name}&fit=crop&w=${width}`
-
+  console.log(product.image)
   return (
     <>
       <h1>product: {id}</h1>
       <div className='product-card'>
-        <Image src={`https:${url}`} width={width} height={calculateHeight(image.details, width)} alt='' />
+        <Image src={product.image} width={400} height={400} alt='' />
         <h3>{product.name}</h3>
         <p>{product.description}</p>
         <ul>
@@ -43,6 +32,13 @@ export async function getStaticProps(context) {
   const res = await fetchEntries();
   const products = res.map(p => p.fields);
   const product = products.find(p => p.id == id);
+  const ACCESS_KEY = process.env.NEXT_PUBLIC_ACCESS_KEY
+  const url = `https://api.unsplash.com/search/photos?client_id=${ACCESS_KEY}&page=1&per_page=1&query=${product.name}`;
+  const image = await fetch(url)
+    .then(res => res.json())
+    .then(data => data.results[0].urls.raw);
+  product.image = `${image}?fit=crop&w=400&h=400`;
+
   return {
     props: {
       product,
