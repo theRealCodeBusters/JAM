@@ -20,7 +20,7 @@ const Product = ({ product }) => {
             <li key={cat}>{cat}</li>
           ))}
         </ul>
-        <p>{product.price}</p>
+        <p>{`${product.price}kr`}</p>
         <p>{`rating: ${product.rating}`}</p>
       </div>
     </>
