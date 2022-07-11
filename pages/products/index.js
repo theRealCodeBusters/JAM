@@ -10,14 +10,14 @@ const Products = ({ products }) => {
         {products.map(p => (
           <li key={p.id}>
             <Link href={`/products/${p.id}`}>
-              <a>{p.name}</a>
+              <a>{`${p.name} - ${p.price}kr`}</a>
             </Link>
           </li>
         ))}
       </ul>
     </>
   )
-}
+};
 
 export async function getStaticProps() {
   const res = await fetchEntries();
