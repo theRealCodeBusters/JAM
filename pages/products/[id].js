@@ -37,7 +37,7 @@ export async function getStaticProps(context) {
   const image = await fetch(url)
     .then(res => res.json())
     .then(data => data.results[0].urls.raw);
-  product.image = `${image}?fit=crop&w=400&h=400`;
+  product.image = `${image}&fit=crop&w=400&h=400&crop=faces`;
 
   return {
     props: {
