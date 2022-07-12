@@ -2,8 +2,8 @@ import React from 'react';
 
 export default function Footer() {
   return (
-    <footer>
-      footer
+    <footer className="footer">
+      <span>© 2022 Copyright: {'<Salt />'}</span>
     </footer>
   )
 }

@@ -1,58 +1,64 @@
 import React from 'react';
-import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { Badge } from '@mantine/core';
 import { fetchEntries } from '../../contentful/client'
 import Layout from '../../components/layout/layout';
+import Rating from '@mui/material/Rating';
 
 const Product = ({ product }) => {
-  const router = useRouter()
-  const { id } = router.query
-  console.log(product.image)
+  const image = product.image.fields;
   return (
     <Layout>
-      <h1>product: {id}</h1>
-      <div className='product-card'>
-        <Image src={product.image} width={400} height={400} alt='' />
-        <h3>{product.name}</h3>
-        <p>{product.description}</p>
-        <ul>
-          {product.category.map(cat => (
-            <li key={cat}>{cat}</li>
-          ))}
-        </ul>
-        <p>{`${product.price}kr`}</p>
-        <p>{`rating: ${product.rating}`}</p>
-      </div>
+      <section className="product">
+        <div className='col-left'>
+          <Image src={`http:${image.file.url}`} width={500} height={500} alt={image.title} />
+        </div>
+        <div className='col-right'>
+          <div className="content">
+            <h1>{product.name}</h1>
+            <hr />
+            <p>{product.description}</p>
+            <p>{`${product.price}kr`}</p>
+            <p>{'stock: '}{product.stock ? product.stock : 'unavailable'}</p>
+            <ul>
+              {product.category.map(category => (
+                <Badge key={category} variant="filled" style={{ marginRight: '0.5rem' }}>{category}</Badge>
+              ))}
+            </ul>
+            <Rating name="rating" value={product.rating} readOnly />
+          </div>
+          <button className="btn-cart">Add to cart</button>
+        </div>
+      </section>
     </Layout>
   );
 }
 
 export async function getStaticProps(context) {
   const { id } = context.params;
-  const res = await fetchEntries();
-  const products = res.map(p => p.fields);
-  const product = products.find(p => p.id == id);
-  const ACCESS_KEY = process.env.NEXT_PUBLIC_ACCESS_KEY
-  const url = `https://api.unsplash.com/search/photos?client_id=${ACCESS_KEY}&page=1&per_page=1&query=${product.name}`;
-  const image = await fetch(url)
+  const products = await fetchEntries();
+  const productInfo = products
+    .map(product => product.fields)
+    .find(product => product.id == id);
+  const productStock = await fetch(`http://localhost:3000/api/products/${id}`)
     .then(res => res.json())
-    .then(data => data.results[0].urls.raw);
-  product.image = `${image}&fit=crop&w=400&h=400&crop=faces`;
-
+    .then(data => data.stock);
   return {
     props: {
-      product,
+      product: {
+        ...productInfo,
+        stock: productStock
+      },
     },
   };
 };
 
 export async function getStaticPaths() {
   const res = await fetchEntries();
-  const products = res.map(p => p.fields);
-  const paths = products.map((product) => ({
-    params: { id: (product.id).toString() },
+  const products = res.map(product => product.fields);
+  const paths = products.map(product => ({
+    params: { id: `${product.id}` },
   }))
-
   return { paths, fallback: false }
 }
 

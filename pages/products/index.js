@@ -6,7 +6,6 @@ import { Card, Image, Text } from '@mantine/core';
 
 
 const Products = ({ products }) => {
-  console.log(products)
   return (
     <Layout>
       <h2>Products</h2>
