@@ -7,15 +7,12 @@ import Rating from '@mui/material/Rating';
 
 const Product = ({ product }) => {
   const [stock, setStock] = useState(null);
-  const env = process.env.NODE_ENV;
-  console.log(env);
-  const url = env === 'development' ? 'localhost:3000' : 'kristaver.tech';
   useEffect(() => {
-    fetch(`http://${url}/api/products/${product.id}`)
+    fetch(`/api/products/${product.id}`)
       .then((res) => res.json())
       .then((data) => {
         setStock(data.stock)
-      })
+      });
   }, [])
   const image = product.image.fields;
   return (
