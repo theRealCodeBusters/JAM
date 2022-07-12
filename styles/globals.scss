@@ -7,11 +7,14 @@ body {
     background-color: #eeeeee;
 }
 
+html {
+    position: relative;
+}
+
 body {
     max-width: 1200px;
     margin: 0 3rem;
     min-height: 100vh;
-    position: relative;
 }
 
 a {

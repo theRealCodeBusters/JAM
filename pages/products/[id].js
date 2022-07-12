@@ -11,9 +11,11 @@ const Product = ({ product }) => {
     fetch(`/api/products/${product.id}`)
       .then((res) => res.json())
       .then((data) => {
-        setStock(data.stock)
+        if (!data) {
+          setStock(data.stock)
+        }
       });
-  }, [])
+  }, []);
   const image = product.image.fields;
   return (
     <Layout>

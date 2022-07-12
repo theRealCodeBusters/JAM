@@ -4,7 +4,6 @@ import Link from 'next/link'
 import Layout from '../../components/layout/layout';
 import { Card, Image, Text } from '@mantine/core';
 
-
 const Products = ({ products }) => {
   return (
     <Layout>
@@ -23,11 +22,9 @@ const Products = ({ products }) => {
                   <Card.Section>
                     <Image src={p.image?.fields?.file?.url} alt={p.name} />
                   </Card.Section>
-
                   <Text className="product-text" weight={500} size="lg">
                     {p.name}
                   </Text>
-
                   <Text size="sm">
                     {p.price}kr.
                   </Text>
@@ -37,7 +34,6 @@ const Products = ({ products }) => {
           ))}
         </div>
       </section>
-
     </Layout>
   )
 };
