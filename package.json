@@ -21,7 +21,6 @@
         "node-sass": "^7.0.1",
         "react": "18.2.0",
         "react-dom": "18.2.0",
-        "react-stars": "^2.2.5",
         "tabler-icons-react": "^1.52.0"
     },
     "devDependencies": {

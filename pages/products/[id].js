@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Badge } from '@mantine/core';
 import { fetchEntries } from '../../contentful/client'
@@ -11,11 +11,11 @@ const Product = ({ product }) => {
     fetch(`/api/products/${product.id}`)
       .then((res) => res.json())
       .then((data) => {
-        if (!data) {
+        if (data) {
           setStock(data.stock)
         }
       });
-  }, []);
+  }, [product.id]);
   const image = product.image.fields;
   return (
     <Layout>

@@ -4,12 +4,12 @@ const password = process.env.NEXT_PUBLIC_MONGODB_PASSWORD;
 const uri = `mongodb+srv://${username}:${password}@cluster0.yxwce.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
-export const getProductsStock = async () => {
+export const getProductsInfo = async () => {
   try {
     await client.connect()
     return await client
-      .db("JAM")
-      .collection("product-stock")
+      .db('JAM')
+      .collection('products')
       .find()
       .toArray();
   } catch (err) {
@@ -19,13 +19,13 @@ export const getProductsStock = async () => {
   }
 };
 
-export const getProductsStockById = async id => {
+export const getProductInfoById = async id => {
   try {
     await client.connect()
     return await client
-      .db("JAM")
-      .collection("product-stock")
-      .findOne({ productId: id });
+      .db('JAM')
+      .collection('products')
+      .findOne({ productId: id })
   } catch (err) {
     console.log(err.message);
   } finally {
