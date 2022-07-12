@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Badge } from '@mantine/core';
 import { fetchEntries } from '../../contentful/client'
@@ -6,6 +6,17 @@ import Layout from '../../components/layout/layout';
 import Rating from '@mui/material/Rating';
 
 const Product = ({ product }) => {
+  const [stock, setStock] = useState(null);
+  const env = process.env.NODE_ENV;
+  console.log(env);
+  const url = env === 'development' ? 'localhost:3000' : 'kristaver.tech';
+  useEffect(() => {
+    fetch(`http://${url}/api/products/${product.id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setStock(data.stock)
+      })
+  }, [])
   const image = product.image.fields;
   return (
     <Layout>
@@ -19,7 +30,7 @@ const Product = ({ product }) => {
             <hr />
             <p>{product.description}</p>
             <p>{`${product.price}kr`}</p>
-            <p>{'stock: '}{product.stock ? product.stock : 'unavailable'}</p>
+            <p>{'stock: '}{stock ? stock : 'unavailable'}</p>
             <ul>
               {product.category.map(category => (
                 <Badge key={category} variant="filled" style={{ marginRight: '0.5rem' }}>{category}</Badge>
@@ -37,21 +48,15 @@ const Product = ({ product }) => {
 export async function getStaticProps(context) {
   const { id } = context.params;
   const products = await fetchEntries();
-  const productInfo = products
+  const product = products
     .map(product => product.fields)
     .find(product => product.id == id);
-  const productStock = await fetch(`http://localhost:3000/api/products/${id}`)
-    .then(res => res.json())
-    .then(data => data.stock);
   return {
     props: {
-      product: {
-        ...productInfo,
-        stock: productStock
-      },
+      product
     },
   };
-};
+}
 
 export async function getStaticPaths() {
   const res = await fetchEntries();
