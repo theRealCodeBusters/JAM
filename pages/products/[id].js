@@ -2,14 +2,14 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { fetchEntries } from '../../contentful/client'
-
+import Layout from '../../components/layout/layout';
 
 const Product = ({ product }) => {
   const router = useRouter()
   const { id } = router.query
   console.log(product.image)
   return (
-    <>
+    <Layout>
       <h1>product: {id}</h1>
       <div className='product-card'>
         <Image src={product.image} width={400} height={400} alt='' />
@@ -23,7 +23,7 @@ const Product = ({ product }) => {
         <p>{`${product.price}kr`}</p>
         <p>{`rating: ${product.rating}`}</p>
       </div>
-    </>
+    </Layout>
   );
 }
 
