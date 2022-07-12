@@ -5,6 +5,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
     Helvetica Neue, sans-serif;
   background-color: #eeeeee;
+  max-width: 800px;
 }
 
 a {
@@ -24,7 +25,7 @@ a {
 }
 .product-card {
   /* padding: 1.3rem; */
-  max-width: 300px;
+  max-width: 100%;
   min-width: 150px;
 }
 .product-text {
