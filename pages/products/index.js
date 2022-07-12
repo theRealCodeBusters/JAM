@@ -10,31 +10,33 @@ const Products = ({ products }) => {
   return (
     <Layout>
       <h2>Products</h2>
-      <section className='products-list'>
-        {products.map(p => (
-          <div key={p.id}>
-            <Link href={`/products/${p.id}`}>
-              <Card
-                shadow="xl"
-                p="xl"
-                component="a"
-                className="product-card"
-              >
-                <Card.Section>
-                  <Image src={p.image?.fields?.file?.url} alt={p.name} />
-                </Card.Section>
+      <section className="products">
+        <div className='products-list'>
+          {products.map(p => (
+            <div key={p.id}>
+              <Link href={`/products/${p.id}`}>
+                <Card
+                  shadow="xl"
+                  p="xl"
+                  component="a"
+                  className="product-card"
+                >
+                  <Card.Section>
+                    <Image src={p.image?.fields?.file?.url} alt={p.name} />
+                  </Card.Section>
 
-                <Text className="product-text" weight={500} size="lg">
-                  {p.name}
-                </Text>
+                  <Text className="product-text" weight={500} size="lg">
+                    {p.name}
+                  </Text>
 
-                <Text size="sm">
-                  {p.price}kr.
-                </Text>
-              </Card>
-            </Link>
-          </div>
-        ))}
+                  <Text size="sm">
+                    {p.price}kr.
+                  </Text>
+                </Card>
+              </Link>
+            </div>
+          ))}
+        </div>
       </section>
 
     </Layout>
