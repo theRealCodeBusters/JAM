@@ -1,5 +1,5 @@
 import React from 'react'
-import { fetchEntries } from '../../contentful/client';
+import { fetchEntries } from '../../utils/contentfulClient';
 import Link from 'next/link'
 import Layout from '../../components/layout/layout';
 import { Card, Image, Text } from '@mantine/core';
