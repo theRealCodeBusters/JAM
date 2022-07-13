@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
-import { Badge } from '@mantine/core';
-import Layout from '../../components/layout/layout';
+import { Badge, Image, Button } from '@mantine/core';
+import Layout from '../../components/Layout';
 import Rating from '@mui/material/Rating';
 import { fetchEntries } from '../../utils/contentfulClient'
 import { getAverage } from '../../utils/helpers';
 
-const Product = ({ product }) => {
+export default function Product({ product }) {
   const [stock, setStock] = useState(null);
   const [rating, setRating] = useState(0);
   const [newRating, setNewRating] = useState(null);
@@ -44,28 +43,32 @@ const Product = ({ product }) => {
   return (
     <Layout>
       <section className="product">
-        <div className='col-left'>
-          <Image src={`http:${image.file.url}`} width={500} height={500} alt={image.title} />
-        </div>
-        <div className='col-right'>
+        <section className='col-left'>
+          <Image className='col-left__image' src={`http:${image.file.url}`} alt={image.title} />
+        </section>
+        <section className='col-right'>
           <div className="content">
-            <h1>{product.name}</h1>
-            <hr />
-            <p>{product.description}</p>
-            <p>{`${product.price}kr`}</p>
-            <p>{'stock: '}{stock ? stock : 'unavailable'}</p>
-            <ul>
-              {product.category.map(category => (
-                <Badge key={category} variant="filled" style={{ marginRight: '0.5rem' }}>{category}</Badge>
-              ))}
-            </ul>
-            <div className='rating-wrapper'>
-              <Rating name="rating" value={rating} onChange={handleRating} precision={0.5} />
-              <span>{'('}{ratingsAmount}{')'}</span>
-            </div>
+            <h1 className='content__title'>{product.name}</h1>
+            <hr className='content__divider'/>
+            <p className='content__description'>{product.description}</p>
           </div>
-          <button onClick={handleBuy} className="btn-cart">Buy</button>
-        </div>
+          <div className='product-data'>
+            <div className="rating-wrapper">
+              <Rating className="rating-wrapper__rating" value={rating} onChange={handleRating} precision={0.5} />
+              <span className='rating-wrapper__count'>{'('}{ratingsAmount}{')'}</span>
+            </div>
+            <ul className='category-list'>
+              {product.category.map(category => (
+                <Badge key={category} className="category-list__badge" variant="filled" style={{ marginInline: '0.5rem' }}>{category}</Badge>
+                ))}
+            </ul>
+          </div>
+          <div className='price-and-stock'>
+            <span className='price-and-stock__stock'>{'stock: '}{stock ? stock : 'unavailable'}</span>
+            <h3 className='price-and-stock__price'>{`${product.price}kr`}</h3>
+          </div>
+          <Button className="col-right__button" onClick={handleBuy}>Buy</Button>
+        </section>
       </section>
     </Layout>
   );
@@ -92,5 +95,3 @@ export async function getStaticPaths() {
   }))
   return { paths, fallback: false }
 }
-
-export default Product;
