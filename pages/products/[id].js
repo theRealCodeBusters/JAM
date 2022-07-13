@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Badge } from '@mantine/core';
-import { fetchEntries } from '../../contentful/client'
 import Layout from '../../components/layout/layout';
 import Rating from '@mui/material/Rating';
+import { fetchEntries } from '../../utils/contentfulClient'
+import { getAverage } from '../../utils/helpers';
 
 const Product = ({ product }) => {
   const [stock, setStock] = useState(null);
+  const [rating, setRating] = useState(0);
   useEffect(() => {
     fetch(`/api/products/${product.id}`)
       .then((res) => res.json())
       .then((data) => {
         if (data) {
-          setStock(data.stock)
+          setStock(data.stock);
+          setRating(getAverage(data.ratings));
         }
       });
   }, [product.id]);
@@ -35,7 +38,7 @@ const Product = ({ product }) => {
                 <Badge key={category} variant="filled" style={{ marginRight: '0.5rem' }}>{category}</Badge>
               ))}
             </ul>
-            <Rating name="rating" value={product.rating} readOnly />
+            <Rating name="rating" value={rating} readOnly />
           </div>
           <button className="btn-cart">Add to cart</button>
         </div>
