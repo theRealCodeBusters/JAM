@@ -9,16 +9,37 @@ import { getAverage } from '../../utils/helpers';
 const Product = ({ product }) => {
   const [stock, setStock] = useState(null);
   const [rating, setRating] = useState(0);
+  const [newRating, setNewRating] = useState(null);
+  const [ratingsAmount, setRatingsAmount] = useState(0);
+  const handleRating = async (event, newValue) => {
+    if (!newRating) {
+      await fetch(`/api/products/${product.id}`,
+       { 
+        method: 'PATCH', 
+        body: JSON.stringify({ "rating": newValue }) 
+      });
+    }
+    setNewRating(newValue);
+  };
+  const handleBuy = async () => {
+    await fetch(`/api/products/${product.id}`,
+    { 
+     method: 'PATCH', 
+     body: JSON.stringify({ "purchase": 1 }) 
+   });
+   setStock(stock -1);
+  }
   useEffect(() => {
     fetch(`/api/products/${product.id}`)
       .then((res) => res.json())
       .then((data) => {
         if (data) {
           setStock(data.stock);
-          setRating(getAverage(data.ratings));
+          setRating(newRating ? newRating : getAverage(data.ratings));
+          setRatingsAmount(data.ratings.length);
         }
       });
-  }, [product.id]);
+  }, [product.id, newRating]);
   const image = product.image.fields;
   return (
     <Layout>
@@ -38,9 +59,12 @@ const Product = ({ product }) => {
                 <Badge key={category} variant="filled" style={{ marginRight: '0.5rem' }}>{category}</Badge>
               ))}
             </ul>
-            <Rating name="rating" value={rating} readOnly />
+            <div className='rating-wrapper'>
+              <Rating name="rating" value={rating} onChange={handleRating} />
+              <span>{'('}{ratingsAmount}{')'}</span>
+            </div>
           </div>
-          <button className="btn-cart">Add to cart</button>
+          <button onClick={handleBuy} className="btn-cart">Buy</button>
         </div>
       </section>
     </Layout>

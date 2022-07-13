@@ -33,4 +33,31 @@ export const getProductInfoById = async id => {
   }
 };
 
+export const updateProduct = async (reqBody, id) => {
+  try {
+    const body = JSON.parse(reqBody);
+    await client.connect();
+    if (body.rating) {
+      await client
+        .db('JAM')
+        .collection('products')
+        .findOneAndUpdate(
+          { productId: id },
+          { $push: { ratings: body.rating }
+        })
+    }
+    if (body.purchase) {
+      await client
+        .db('JAM')
+        .collection('products')
+        .findOneAndUpdate({ productId: id }, { $inc: { stock: (body.purchase * -1) } })
+    }
+  } catch(err) {
+    console.log(err);
+    throw err;
+  } finally {
+    await client.close();
+  }
+};
+
 export default client;

@@ -10,7 +10,7 @@ const Products = ({ products }) => {
       <h2>Products</h2>
       <section className="products">
         <div className='products-list'>
-          {products.reverse().map(p => (
+          {products.map(p => (
             <div key={p.id}>
               <Link href={`/products/${p.id}`}>
                 <Card

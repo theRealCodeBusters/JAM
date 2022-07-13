@@ -4,9 +4,9 @@ import Layout from '../components/layout/layout';
 import RatedProducts from '../components/highestRatedProducts/';
 import HeroImg from '../assets/images/hero.jpg';
 import { fetchEntries } from '../utils/contentfulClient';
+import { topNProducts } from '../utils/helpers';
 
 export default function Home({products}) {
-  console.log(products)
   return (
     <Layout>
       <div>
@@ -32,13 +32,11 @@ export default function Home({products}) {
 export async function getStaticProps() {
   const ratings = await fetch('http://localhost:3000/api/products')
     .then(res => res.json());
-  const res = await fetchEntries();
-  const products = res.map((p) => {
-    return p.fields;
-  });
+  const products = await fetchEntries()
+    .then(data => data.map(product => product.fields));
   return {
     props: {
-      products,
-    },
+      products: topNProducts(products, ratings, 3)
+    }
   };
 };

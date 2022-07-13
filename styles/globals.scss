@@ -108,6 +108,11 @@ img {
     // object-fit: contain;
 }
 
+.rating-wrapper {
+    display: flex;
+    align-content: center;
+}
+
 .btn-cart {
     text-transform: uppercase;
     outline: none;
@@ -120,6 +125,7 @@ img {
         color: white;
     }
 }
+
 
 @media only screen and (min-width: 600px) {
     .products-list {
