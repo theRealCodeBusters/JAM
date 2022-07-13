@@ -3,8 +3,7 @@ import Image from 'next/image';
 import Layout from '../components/layout/layout';
 import RatedProducts from '../components/highestRatedProducts/';
 import HeroImg from '../assets/images/hero.jpg';
-import { Card, Text } from '@mantine/core';
-import { fetchEntries } from '../contentful/client';
+import { fetchEntries } from '../utils/contentfulClient';
 
 export default function Home({products}) {
   console.log(products)
@@ -31,6 +30,8 @@ export default function Home({products}) {
 }
 
 export async function getStaticProps() {
+  const ratings = await fetch('http://localhost:3000/api/products')
+    .then(res => res.json());
   const res = await fetchEntries();
   const products = res.map((p) => {
     return p.fields;
