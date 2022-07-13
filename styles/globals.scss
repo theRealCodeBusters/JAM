@@ -9,11 +9,13 @@ body {
 
 html {
     position: relative;
+    // display: flex;
+    // justify-content: center;
 }
 
 body {
     max-width: 1200px;
-    margin: 0 3rem;
+    margin: 0 auto;
     min-height: 120vh;
 }
 
@@ -103,7 +105,7 @@ a {
 }
 
 img {
-    object-fit: contain;
+    // object-fit: contain;
 }
 
 .btn-cart {

@@ -1,16 +1,14 @@
-import React from 'react'
-import { fetchEntries } from '../../contentful/client';
+import React from 'react';
 import Link from 'next/link'
-import Layout from '../../components/layout/layout';
+
 import { Card, Image, Text } from '@mantine/core';
 
-const Products = ({ products }) => {
+const RatedProducts = ({products}) => {
+  console.log(products)
   return (
-    <Layout>
-      <h2>Products</h2>
-      <section className="products">
-        <div className='products-list'>
-          {products.reverse().map(p => (
+    <section>
+      <div>
+        {products && products.map(p => (
             <div key={p.id}>
               <Link href={`/products/${p.id}`}>
                 <Card
@@ -20,7 +18,7 @@ const Products = ({ products }) => {
                   className="product-card"
                 >
                   <Card.Section>
-                    <Image src={p.image?.fields?.file?.url} alt={p.name} />
+                    <Image src={p.image?.fields?.file?.url} alt={p.name} width={300}  height={200}/>
                   </Card.Section>
                   <Text className="product-text" weight={500} size="lg">
                     {p.name}
@@ -32,22 +30,12 @@ const Products = ({ products }) => {
               </Link>
             </div>
           ))}
-        </div>
-      </section>
-    </Layout>
+      </div>
+    </section>
   )
-};
+}
 
-export async function getStaticProps() {
-  const res = await fetchEntries();
-  const products = res.map((p) => {
-    return p.fields;
-  });
-  return {
-    props: {
-      products,
-    },
-  };
-};
+export default RatedProducts;
 
-export default Products;
+
+
