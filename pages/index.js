@@ -5,6 +5,7 @@ import RatedProducts from '../components/highestRatedProducts/';
 import HeroImg from '../assets/images/hero.jpg';
 import { fetchEntries } from '../utils/contentfulClient';
 import { topNProducts } from '../utils/helpers';
+import { getProductsInfo } from '../utils/mongoDbClient';
 
 export default function Home({products}) {
   return (
@@ -30,8 +31,7 @@ export default function Home({products}) {
 }
 
 export async function getStaticProps() {
-  const ratings = await fetch('http://localhost:3000/api/products')
-    .then(res => res.json());
+  const ratings = await getProductsInfo()
   const products = await fetchEntries()
     .then(data => data.map(product => product.fields));
   return {
