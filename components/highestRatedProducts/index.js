@@ -1,14 +1,16 @@
 import React from 'react';
-import Link from 'next/link'
+import Link from 'next/link';
+import Rating from '@mui/material/Rating';
 
 import { Card, Image, Text } from '@mantine/core';
 
-const RatedProducts = ({products}) => {
-  console.log(products)
+const RatedProducts = ({products, ratings}) => {
   return (
     <section>
-      <div>
-        {products && products.map(p => (
+      <div className='featured-products'>
+        {products && products.map(p => {
+          const productRating = ratings.find(pr => pr.productId === p.id).rating;
+          return (
             <div key={p.id}>
               <Link href={`/products/${p.id}`}>
                 <Card
@@ -26,10 +28,11 @@ const RatedProducts = ({products}) => {
                   <Text size="sm">
                     {p.price}kr.
                   </Text>
+                  <Rating value={productRating} precision={0.1} readOnly/>
                 </Card>
               </Link>
             </div>
-          ))}
+          )})}
       </div>
     </section>
   )

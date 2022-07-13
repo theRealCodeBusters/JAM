@@ -44,6 +44,16 @@ a {
     }
 }
 
+.h-title {
+    text-align: center;
+}
+
+.featured-products {
+    display: flex;
+    justify-content: center;
+    gap: 2rem
+}
+
 .product {
     margin-top: 3rem;
 }

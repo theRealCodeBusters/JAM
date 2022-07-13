@@ -60,7 +60,7 @@ const Product = ({ product }) => {
               ))}
             </ul>
             <div className='rating-wrapper'>
-              <Rating name="rating" value={rating} onChange={handleRating} />
+              <Rating name="rating" value={rating} onChange={handleRating} precision={0.5} />
               <span>{'('}{ratingsAmount}{')'}</span>
             </div>
           </div>
