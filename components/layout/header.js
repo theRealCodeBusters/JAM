@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from "next/link"
 
-const header = () => {
+export default function Header() {
   return (
     <header className='header'>
       <nav className="navbar">
@@ -15,6 +15,4 @@ const header = () => {
       </nav>
     </header>
   )
-}
-
-export default header
+};
