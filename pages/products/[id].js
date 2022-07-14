@@ -56,18 +56,18 @@ export default function Product({ product }) {
         <section className='col-right'>
           <div className="content">
             <h1 className='content__title'>{product.name}</h1>
-            <hr className='content__divider'/>
+            <hr className='content__divider' />
             <p className='content__description'>{product.description}</p>
           </div>
           <div className='product-data'>
             <div className="rating-wrapper">
-              <Rating className="rating-wrapper__rating" value={rating} onChange={handleRating} precision={0.5} />
+              <Rating className="rating-wrapper__rating" value={Number(rating)} onChange={handleRating} precision={0.5} />
               <span className='rating-wrapper__count'>{'('}{ratingsAmount}{')'}</span>
             </div>
             <ul className='category-list'>
               {product.category.map(category => (
                 <Badge key={category} className="category-list__badge" variant="filled" style={{ marginInline: '0.5rem' }}>{category}</Badge>
-                ))}
+              ))}
             </ul>
           </div>
           <div className='price-and-stock'>

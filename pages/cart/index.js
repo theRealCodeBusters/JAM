@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { getTotalPrice, validatePromoCode } from '../../utils/helpers';
-import Layout from '../../components/layout/layout';
+import Layout from '../../components/Layout';
 import { Image } from '@mantine/core';
 
 
