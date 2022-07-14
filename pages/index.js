@@ -12,7 +12,7 @@ export default function Home({ products, ratings }) {
       <section className="hero">
         <Image className='hero__image' src={HeroImg.src} alt="hero image" fit='fill' />
       </section>
-      <Featured products={products} ratings={ratings}/>
+      <Featured products={products} ratings={ratings} />
     </Layout>
   )
 }
