@@ -14,4 +14,4 @@ export async function fetchEntries() {
     return entries.items
 }
 
-export default fetchEntries; 
+export default client; 

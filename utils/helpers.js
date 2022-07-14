@@ -1,4 +1,7 @@
 export const getAverage = array => {
+  if (!array.length) {
+    return 0;
+  }
   const sum = array.reduce((acc, curr) => acc + curr);
   return (sum / array.length).toFixed(2);
 };
