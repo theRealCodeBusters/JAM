@@ -79,7 +79,6 @@ export const getCartProducts = async () => {
 
 export const productToCart = async (reqBody) => {
   const body = JSON.parse(reqBody);
-  console.log(body);
   try {
     const query = { productId: body.productId };
     const update = { $inc: { amount: 1 } };
