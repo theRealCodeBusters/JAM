@@ -18,8 +18,8 @@ export default function Home({ products, ratings }) {
 }
 
 export async function getServerSideProps() {
-  const ratings = await getProductsInfo();
-  const avgRatings = ratings
+  const productInfo = await getProductsInfo();
+  const avgRatings = productInfo
     .map(p => ({
       productId: p.productId,
       rating: getAverage(p.ratings)
@@ -28,7 +28,7 @@ export async function getServerSideProps() {
     .then(data => data.map(product => product.fields));
   return {
     props: {
-      products: topNProducts(products, ratings, 3),
+      products: topNProducts(products, productInfo, 3),
       ratings: avgRatings,
     }
   };

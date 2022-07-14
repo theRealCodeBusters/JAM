@@ -1,5 +1,6 @@
 import React from 'react'
 import { fetchEntries } from '../../utils/contentfulClient';
+import { hydrate } from '../../utils/mongoDbClient';
 import Link from 'next/link'
 import Layout from '../../components/layout';
 import { Card, Image, Text } from '@mantine/core';
@@ -41,6 +42,7 @@ export async function getStaticProps() {
   const products = res.map((p) => {
     return p.fields;
   });
+  await hydrate(products);
   return {
     props: {
       products,

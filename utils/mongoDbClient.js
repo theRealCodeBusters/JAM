@@ -110,4 +110,33 @@ export const removeProductById = async id => {
   }
 };
 
+// HYDRATE DB
+export const hydrate = async (products) => {
+  const operations = products.map(product => {
+    return (
+      { updateOne: 
+        {
+          "filter": { "productId": product.id },
+          "update": {
+             $setOnInsert: { "productId": product.id, "stock": 10, "ratings": [] }
+            },
+          "upsert": true,
+        }
+      }
+    )
+  })
+  try {
+    await client.connect()
+    return await client
+      .db('JAM')
+      .collection('products')
+      .bulkWrite(operations);
+  } catch (err) {
+    console.log(err.message);
+  } finally {
+    await client.close();
+  }
+};
+
+
 export default client;
