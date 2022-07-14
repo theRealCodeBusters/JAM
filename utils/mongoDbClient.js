@@ -111,7 +111,7 @@ export const removeProductById = async id => {
 };
 
 // HYDRATE DB
-export const hydrate = async (products) => {
+export const hydrateDb = async (products) => {
   const operations = products.map(product => {
     return (
       { updateOne: 

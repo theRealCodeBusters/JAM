@@ -54,7 +54,7 @@ export default function Cart({ products }) {
           <table>
             <thead>
               <tr>
-                <th></th>
+                <th> </th>
                 <th>PRODUCT</th>
                 <th>QUANTITY</th>
                 <th>PRICE</th>

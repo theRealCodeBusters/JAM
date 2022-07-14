@@ -6,7 +6,7 @@ import { Card, Image, Text } from '@mantine/core';
 export default function Featured({ products, ratings }) {
   return (
     <section className='featured'>
-      <h1 className='featured__title'>Featured Products</h1>
+      <h1 className='featured__title'>Top Rated Products</h1>
       <section className='featured-products'>
       {products && products.map(p => {
         const productRating = ratings.find(pr => pr.productId === p.id).rating;

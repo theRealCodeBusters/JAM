@@ -56,16 +56,25 @@ body {
   min-height: calc(100vh - 6rem);
 }
 
+.hero {
+  z-index: 0;
+}
+
 .featured {
+  padding: 2rem;
+  margin-block: auto;
+  margin-inline: 1rem;
   height: 100%;
   max-width: 100%;
   text-align: center;
-  margin-bottom: 5rem;
+  border-radius: 0.2rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 100;
   &__title {
-    margin-block: 3rem;
+    margin-bottom: 3rem;
+    position: relative;
   }
   .featured-products {
-    margin-inline: 1rem;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
@@ -173,9 +182,11 @@ body {
 
 .cart {
   padding: 2rem;
+  width: 100%;
 }
 
 .summary {
+  width: 100%;
   background-color: #d7d6d6;
   padding: 2rem;
 }
@@ -199,6 +210,9 @@ body {
 table {
   text-align: left;
   width: 100%;
+}
+th {
+  padding: 0.5rem;
 }
 
 td {
