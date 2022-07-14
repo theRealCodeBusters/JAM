@@ -8,7 +8,7 @@ export const productsWithRating = (products, info) => {
     const productInfo = info.find(p => p.productId === product.id);
     return ({
       ...product,
-      rating: getAverage(productInfo.ratings)
+      rating: getAverage(productInfo?.ratings)
     })
   })
 };

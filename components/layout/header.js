@@ -1,21 +1,19 @@
 import React from 'react'
 import Link from "next/link"
 
-
 const header = () => {
   return (
-    <nav className="navbar">
-      <div>
+    <header className='header'>
+      <nav className="navbar">
         <h2 className="navbar__logo">CodeBusters</h2>
-        <ul>
-          <Link href='/'><a><li>Home</li></a></Link>
-          <Link href='/products'><a><li>Products</li></a></Link>
+        <ul className='nav-links'>
+          <Link href='/'><h3><li className='nav-links__link'>Home</li></h3></Link>
+          <Link  href='/products'><h3><li className='nav-links__link'>Products</li></h3></Link>
+          <Link href='/cart'><a><li className="nav-links_link">Cart</li></a></Link>
         </ul>
-      </div>
-      <ul>
-        <Link href='/cart'><a><li>Cart</li></a></Link>
-      </ul>
-    </nav>
+        <h1 className='navbar__title'>JAMify</h1>
+      </nav>
+    </header>
   )
 }
 
