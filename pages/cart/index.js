@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { getTotalPrice, validatePromoCode } from '../../utils/helpers';
-import Layout from '../../components/Layout';
+import Layout from '../../components/layout';
 import { Image } from '@mantine/core';
 
 
-const Products = () => {
+const Cart = () => {
   const [cartProducts, setCartProducts] = useState([]);
   const [shippingCost, setShippingCost] = useState(50);
   const [promoCode, setPromoCode] = useState("");
@@ -104,4 +104,4 @@ const Products = () => {
 };
 
 
-export default Products;
+export default Cart;
