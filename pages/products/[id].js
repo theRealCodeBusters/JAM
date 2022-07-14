@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Badge, Image, Button } from '@mantine/core';
-import Layout from '../../components/Layout';
+import Layout from '../../components/layout';
 import Rating from '@mui/material/Rating';
 import { fetchEntries } from '../../utils/contentfulClient'
 import { getAverage } from '../../utils/helpers';
