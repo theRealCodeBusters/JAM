@@ -23,7 +23,7 @@ export const topNProducts = (products, info, amount) => {
 };
 
 export const getTotalPrice = array => {
-  return array.reduce((acc, curr) => acc + curr.price, 0);
+  return array.reduce((acc, curr) => acc + (curr.price * curr.amount), 0);
 };
 
 export const validatePromoCode = promoCode => {
