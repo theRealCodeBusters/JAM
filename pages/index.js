@@ -1,6 +1,6 @@
 import { Image } from '@mantine/core';
-import Layout from '../components/Layout';
-import Featured from '../components/Featured';
+import Layout from '../components/layout';
+import Featured from '../components/featured';
 import HeroImg from '../assets/images/hero.jpg';
 import { fetchEntries } from '../utils/contentfulClient';
 import { topNProducts, getAverage } from '../utils/helpers';
