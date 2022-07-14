@@ -4,7 +4,7 @@ import { fetchEntries } from '../../utils/contentfulClient';
 import Layout from '../../components/layout';
 import { Image } from '@mantine/core';
 
-const Cart = ({ products }) => {
+export default function Cart({ products }) {
   const [cartProducts, setCartProducts] = useState([]);
   const [shippingCost, setShippingCost] = useState(50);
   const [deleted, setDeleted] = useState(false);
@@ -17,21 +17,24 @@ const Cart = ({ products }) => {
       .then(() => {
         setDeleted(!deleted);
       });
-  }
-
+  };
   useEffect(() => {
     fetch(`/api/cart`)
       .then((res) => res.json())
       .then((data) => {
         if (data) {
-          const productList = data.map(productInfo => (
-            products.find(product => product.id === productInfo.productId)
-          ))
+          const productList = data.map(productInfo => {
+            const productDetails = products.find(product => product.id === productInfo.productId);
+            return (
+              {
+                ...productDetails,
+                amount: productInfo.amount
+              }
+          )})
           setCartProducts(productList);
         }
       });
-  }, [deleted]);
-
+  }, [deleted, products]);
   return (
     <Layout>
       <section className="cart">
@@ -39,13 +42,20 @@ const Cart = ({ products }) => {
         <section className="products-details">
           <div className="products-details__header">
             <h2>Shopping Cart</h2>
-            <h2>{cartProducts && cartProducts.length} items</h2>
+            <h2>
+              {cartProducts && cartProducts.reduce(
+                (acc, curr) => acc + curr.amount,
+                0
+              )}
+              {' items'}
+            </h2>
           </div>
           <hr />
           <table>
             <thead>
               <tr>
-                <th>PRODUCT DETAILS</th>
+                <th></th>
+                <th>PRODUCT</th>
                 <th>QUANTITY</th>
                 <th>PRICE</th>
                 <th>TOTAL</th>
@@ -55,16 +65,18 @@ const Cart = ({ products }) => {
               {cartProducts.map(p => {
                 return (
                   <tr key={p.id}>
-                    <td className="flex-wrapper">
+                    <td>
                       <Image src={p.image?.fields?.file?.url} alt={p.name} width={150} height={150} />
+                    </td>
+                    <td className="flex-wrapper">
                       <div>
                         <p>{p.name}</p>
                         <button onClick={() => { handleRemove(p.id) }}>Remove</button>
                       </div>
                     </td>
-                    <td>quantity</td>
-                    <td>{p.price}kr.</td>
-                    <td>total price</td>
+                    <td>{`x${p.amount}`}</td>
+                    <td>{p.price}kr</td>
+                    <td>{p.price * p.amount}kr</td>
                   </tr>
                 )
               })}
@@ -109,6 +121,3 @@ export async function getStaticProps() {
     },
   };
 };
-
-
-export default Cart;

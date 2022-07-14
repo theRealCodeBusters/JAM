@@ -82,8 +82,8 @@ export const productToCart = async (reqBody) => {
   console.log(body);
   try {
     const query = { productId: body.productId };
-    const update = { productId: body.productId, $inc: { amount: 1 } };
-    const options = { usert: true };
+    const update = { $inc: { amount: 1 } };
+    const options = { upsert: true };
     await client.connect();
     return await client
       .db('JAM')
