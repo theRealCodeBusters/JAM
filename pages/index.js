@@ -7,7 +7,6 @@ import { topNProducts, getAverage } from '../utils/helpers';
 import { getProductsInfo } from '../utils/mongoDbClient';
 
 export default function Home({ products, ratings }) {
-  console.dir(HeroImg);
   return (
     <Layout>
       <section className="hero">
