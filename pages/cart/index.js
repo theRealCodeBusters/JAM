@@ -1,41 +1,36 @@
 import React, { useState, useEffect } from 'react'
 import { getTotalPrice, validatePromoCode } from '../../utils/helpers';
+import { fetchEntries } from '../../utils/contentfulClient';
 import Layout from '../../components/layout';
 import { Image } from '@mantine/core';
 
-
-const Cart = () => {
+const Cart = ({ products }) => {
   const [cartProducts, setCartProducts] = useState([]);
   const [shippingCost, setShippingCost] = useState(50);
+  const [deleted, setDeleted] = useState(false);
   const [promoCode, setPromoCode] = useState("");
-
-  const handleRemove = async (id) => {
-    // setCartProducts(cartProducts.filter(product => product.id !== id));
-    await fetch(`/api/products/${id}`,
+  const handleRemove = (id) => {
+    fetch(`/api/cart/${id}`,
       {
         method: 'DELETE',
+      })
+      .then(() => {
+        setDeleted(!deleted);
       });
   }
 
-  const handleFetch = async () => {
-    setTimeout(() => {
-
-      fetch(`/api/cart`)
-        .then((res) => res.json())
-        .then((data) => {
-          if (data) {
-            setCartProducts(data);
-          }
-        });
-    }, 1000);
-  }
-
-
-
-
   useEffect(() => {
-    handleFetch()
-  }, [cartProducts]);
+    fetch(`/api/cart`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data) {
+          const productList = data.map(productInfo => (
+            products.find(product => product.id === productInfo.productId)
+          ))
+          setCartProducts(productList);
+        }
+      });
+  }, [deleted]);
 
   return (
     <Layout>
@@ -59,12 +54,12 @@ const Cart = () => {
             <tbody>
               {cartProducts.map(p => {
                 return (
-                  <tr key={p._id}>
+                  <tr key={p.id}>
                     <td className="flex-wrapper">
                       <Image src={p.image?.fields?.file?.url} alt={p.name} width={150} height={150} />
                       <div>
                         <p>{p.name}</p>
-                        <button onClick={() => { handleRemove(p._id) }}>Remove</button>
+                        <button onClick={() => { handleRemove(p.id) }}>Remove</button>
                       </div>
                     </td>
                     <td>quantity</td>
@@ -101,6 +96,18 @@ const Cart = () => {
       </section>
     </Layout>
   )
+};
+
+export async function getStaticProps() {
+  const res = await fetchEntries();
+  const products = res.map((p) => {
+    return p.fields;
+  });
+  return {
+    props: {
+      products,
+    },
+  };
 };
 
 

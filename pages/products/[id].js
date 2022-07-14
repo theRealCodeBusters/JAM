@@ -21,18 +21,16 @@ export default function Product({ product }) {
     setNewRating(newValue);
   };
   const handleBuy = async () => {
-    // STOCK
     await fetch(`/api/products/${product.id}`,
       {
         method: 'PATCH',
         body: JSON.stringify({ "purchase": 1 })
       });
     setStock(stock - 1);
-    // CART
-    await fetch(`/api/products/${product.id}`,
+    await fetch(`/api/cart`,
       {
         method: 'POST',
-        body: JSON.stringify(product)
+        body: JSON.stringify({ "productId": product.id})
       });
   }
   useEffect(() => {

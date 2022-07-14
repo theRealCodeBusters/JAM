@@ -1,15 +1,11 @@
-import { getCartProducts, productToCart } from '../../../utils/mongoDbClient';
+import { removeProductById } from '../../../utils/mongoDbClient';
 
 export default async function handler(req, res) {
   switch (req.method) {
-    case 'GET':
-      const products = await getCartProducts();
-      res.status(200).json(products);
-      break;
-    case 'POST':
-      await productToCart(req.body)
+    case 'DELETE':
+      await removeProductById(Number(req.query.id))
         .then(() => {
-          res.status(201).end();
+          res.status(200).end();
         })
         .catch((e) => {
           res.status(500).json({ error: e.message });
@@ -19,4 +15,3 @@ export default async function handler(req, res) {
       res.status(400).json({ error: 'Method Not Allowed' });
   }
 }
-

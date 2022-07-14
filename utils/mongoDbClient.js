@@ -77,29 +77,18 @@ export const getCartProducts = async () => {
   }
 };
 
-export const productToCart = async (reqBody, id) => {
-  // console.log(reqBody);
+export const productToCart = async (reqBody) => {
   const body = JSON.parse(reqBody);
-
+  console.log(body);
   try {
-    const newBody = {
-      _id: id,
-      category: body.category,
-      description: body.description,
-      image: body.image,
-      name: body.name,
-      price: body.price
-    }
-
-
-    console.log(newBody);
+    const query = { productId: body.productId };
+    const update = { productId: body.productId, $inc: { amount: 1 } };
+    const options = { usert: true };
     await client.connect();
-
-    await client
+    return await client
       .db('JAM')
       .collection('carts')
-      .insertOne(newBody)
-
+      .updateOne(query, update, options);
   } catch (err) {
     console.log(err);
     throw err;
@@ -114,7 +103,7 @@ export const removeProductById = async id => {
     return await client
       .db('JAM')
       .collection('carts')
-      .deleteOne({ _id: id })
+      .deleteOne({ productId: id })
   } catch (err) {
     console.log(err.message);
   } finally {

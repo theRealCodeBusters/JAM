@@ -1,4 +1,4 @@
-import { getProductInfoById, updateProduct, productToCart, removeProductById } from '../../../utils/mongoDbClient';
+import { getProductInfoById, updateProduct } from '../../../utils/mongoDbClient';
 
 export default async function handler(req, res) {
   switch (req.method) {
@@ -10,24 +10,6 @@ export default async function handler(req, res) {
       await updateProduct(req.body, Number(req.query.id))
         .then(() => {
           res.status(204).end();
-        })
-        .catch((e) => {
-          res.status(500).json({ error: e.message });
-        });
-      break;
-    case 'POST':
-      await productToCart(req.body, Number(req.query.id))
-        .then(() => {
-          res.status(201).end();
-        })
-        .catch((e) => {
-          res.status(500).json({ error: e.message });
-        });
-      break;
-    case 'DELETE':
-      await removeProductById(Number(req.query.id))
-        .then(() => {
-          res.status(200).end();
         })
         .catch((e) => {
           res.status(500).json({ error: e.message });
