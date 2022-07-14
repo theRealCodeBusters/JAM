@@ -1,7 +1,7 @@
 import React from 'react'
 import { fetchEntries } from '../../utils/contentfulClient';
 import Link from 'next/link'
-import Layout from '../../components/Layout';
+import Layout from '../../components/layout';
 import { Card, Image, Text } from '@mantine/core';
 
 export default function Products({ products }) {
