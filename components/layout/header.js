@@ -5,10 +5,15 @@ import Link from "next/link"
 const header = () => {
   return (
     <nav className="navbar">
-      <h2 className="navbar__logo">CodeBusters</h2>
+      <div>
+        <h2 className="navbar__logo">CodeBusters</h2>
+        <ul>
+          <Link href='/'><a><li>Home</li></a></Link>
+          <Link href='/products'><a><li>Products</li></a></Link>
+        </ul>
+      </div>
       <ul>
-        <Link href='/'><a><li>Home</li></a></Link>
-        <Link href='/products'><a><li>Products</li></a></Link>
+        <Link href='/cart'><a><li>Cart</li></a></Link>
       </ul>
     </nav>
   )

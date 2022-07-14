@@ -7,6 +7,7 @@ import { fetchEntries } from '../../utils/contentfulClient'
 import { getAverage } from '../../utils/helpers';
 
 const Product = ({ product }) => {
+  console.log(product)
   const [stock, setStock] = useState(null);
   const [rating, setRating] = useState(0);
   const [newRating, setNewRating] = useState(null);
@@ -14,20 +15,27 @@ const Product = ({ product }) => {
   const handleRating = async (event, newValue) => {
     if (!newRating) {
       await fetch(`/api/products/${product.id}`,
-       { 
-        method: 'PATCH', 
-        body: JSON.stringify({ "rating": newValue }) 
-      });
+        {
+          method: 'PATCH',
+          body: JSON.stringify({ "rating": newValue })
+        });
     }
     setNewRating(newValue);
   };
   const handleBuy = async () => {
+    // STOCK
     await fetch(`/api/products/${product.id}`,
-    { 
-     method: 'PATCH', 
-     body: JSON.stringify({ "purchase": 1 }) 
-   });
-   setStock(stock -1);
+      {
+        method: 'PATCH',
+        body: JSON.stringify({ "purchase": 1 })
+      });
+    setStock(stock - 1);
+    // CART
+    await fetch(`/api/products/${product.id}`,
+      {
+        method: 'POST',
+        body: JSON.stringify(product)
+      });
   }
   useEffect(() => {
     fetch(`/api/products/${product.id}`)
