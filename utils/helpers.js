@@ -18,3 +18,14 @@ export const topNProducts = (products, info, amount) => {
   ratedProducts.sort((a, b) => b.rating - a.rating);
   return ratedProducts.slice(0, amount);
 };
+
+export const getTotalPrice = array => {
+  return array.reduce((acc, curr) => acc + curr.price, 0);
+};
+
+export const validatePromoCode = promoCode => {
+  if (promoCode === 'SALT') {
+    return 30;
+  }
+  return 0;
+};

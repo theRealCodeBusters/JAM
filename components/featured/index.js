@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Rating from '@mui/material/Rating';
 import { Card, Image, Text } from '@mantine/core';
 
-export default function Featured({products, ratings}) {
+export default function Featured({ products, ratings }) {
   return (
     <section className='featured'>
       <h1 className='featured__title'>Featured Products</h1>

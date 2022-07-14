@@ -43,8 +43,9 @@ export const updateProduct = async (reqBody, id) => {
         .collection('products')
         .findOneAndUpdate(
           { productId: id },
-          { $push: { ratings: body.rating }
-        })
+          {
+            $push: { ratings: body.rating }
+          })
     }
     if (body.purchase) {
       await client
@@ -52,9 +53,70 @@ export const updateProduct = async (reqBody, id) => {
         .collection('products')
         .findOneAndUpdate({ productId: id }, { $inc: { stock: (body.purchase * -1) } })
     }
-  } catch(err) {
+  } catch (err) {
     console.log(err);
     throw err;
+  } finally {
+    await client.close();
+  }
+};
+
+// CART
+export const getCartProducts = async () => {
+  try {
+    await client.connect()
+    return await client
+      .db('JAM')
+      .collection('carts')
+      .find()
+      .toArray();
+  } catch (err) {
+    console.log(err.message);
+  } finally {
+    await client.close();
+  }
+};
+
+export const productToCart = async (reqBody, id) => {
+  // console.log(reqBody);
+  const body = JSON.parse(reqBody);
+
+  try {
+    const newBody = {
+      _id: id,
+      category: body.category,
+      description: body.description,
+      image: body.image,
+      name: body.name,
+      price: body.price
+    }
+
+
+    console.log(newBody);
+    await client.connect();
+
+    await client
+      .db('JAM')
+      .collection('carts')
+      .insertOne(newBody)
+
+  } catch (err) {
+    console.log(err);
+    throw err;
+  } finally {
+    await client.close();
+  }
+};
+
+export const removeProductById = async id => {
+  try {
+    await client.connect()
+    return await client
+      .db('JAM')
+      .collection('carts')
+      .deleteOne({ _id: id })
+  } catch (err) {
+    console.log(err.message);
   } finally {
     await client.close();
   }
