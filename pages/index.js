@@ -7,7 +7,7 @@ import { fetchEntries } from '../utils/contentfulClient';
 import { topNProducts, getAverage } from '../utils/helpers';
 import { getProductsInfo } from '../utils/mongoDbClient';
 
-export default function Home({products, ratings}) {
+export default function Home({ products, ratings }) {
   return (
     <Layout>
       <div>
@@ -18,11 +18,11 @@ export default function Home({products, ratings}) {
         </Head>
         <header className="hero">
           <h1 className='h-title'>Jamify</h1>
-           <Image src={HeroImg} width={1000} height={300} layout='responsive' objectFit='cover' alt="hero image" />
+          <Image src={HeroImg} width={1000} height={300} layout='responsive' objectFit='cover' alt="hero image" />
         </header>
         <section>
           <h2 className='h-title'>Featured products</h2>
-           <RatedProducts products={products} ratings={ratings}/>
+          <RatedProducts products={products} ratings={ratings} />
         </section>
       </div>
     </Layout>
@@ -38,6 +38,8 @@ export async function getServerSideProps() {
     }));
   const products = await fetchEntries()
     .then(data => data.map(product => product.fields));
+
+
   return {
     props: {
       products: topNProducts(products, ratings, 3),
