@@ -69,7 +69,7 @@ export default function Product({ product }) {
             </ul>
           </div>
           <div className='price-and-stock'>
-            <span className='price-and-stock__stock'>{'stock: '}{stock ? stock : 'unavailable'}</span>
+            <span className='price-and-stock__stock'>{'stock: '}{stock ? stock : 'loading'}</span>
             <h3 className='price-and-stock__price'>{`${product.price}kr`}</h3>
           </div>
           <Button className="col-right__button" onClick={handleBuy}>Buy</Button>
